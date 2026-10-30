@@ -12,19 +12,15 @@ import soa.service.JwtService;
 @SpringBootTest
 class ContractorserviceApplicationTests {
 
-	@Autowired(required = false)
-	private JwtService jwtService;
-
 	@Test
 	void contextLoads() {
 	}
 
 	@Test
 	void testJwtTokenGenerationAndValidation() {
-		if (jwtService != null) {
-			String token = jwtService.generateToken("testContractor", "CONTRACTOR", "Apex Builders");
-			assertNotNull(token);
-			assertTrue(jwtService.isTokenValid(token));
-		}
+		JwtService jwt = new JwtService();
+		String token = jwt.generateToken("testContractor", "CONTRACTOR", "Apex Builders");
+		assertNotNull(token);
+		assertTrue(jwt.isTokenValid(token));
 	}
 }

@@ -75,4 +75,17 @@ public class GatewayController {
 
 		return GS.invokeService(HttpMethod.PUT, serviceName, endpoint, data, authHeader);
 	}
+
+	@org.springframework.web.bind.annotation.DeleteMapping("{serviceName}/**")
+	public Object forwardDelete(
+			@PathVariable String serviceName,
+			HttpServletRequest request,
+			@RequestHeader(value = "Authorization", required = false) String authHeader) {
+
+		String fullPath = request.getRequestURI();
+		String prefix = "/" + serviceName;
+		String endpoint = fullPath.substring(prefix.length());
+
+		return GS.invokeService(HttpMethod.DELETE, serviceName, endpoint, null, authHeader);
+	}
 }

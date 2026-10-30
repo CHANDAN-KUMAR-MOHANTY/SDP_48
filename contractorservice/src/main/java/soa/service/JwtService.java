@@ -18,10 +18,10 @@ import io.jsonwebtoken.security.Keys;
 public class JwtService {
 
 	@Value("${jwt.secret:BuildAssetLogisticsSecretKeyForJWTTokenGeneration1234567890abcdefghijklmnopqrstuvwxyz}")
-	private String secret;
+	private String secret = "BuildAssetLogisticsSecretKeyForJWTTokenGeneration1234567890abcdefghijklmnopqrstuvwxyz";
 
 	@Value("${jwt.expiration-ms:86400000}")
-	private long expirationMs;
+	private long expirationMs = 86400000L;
 
 	private SecretKey getSigningKey() {
 		return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
@@ -57,6 +57,11 @@ public class JwtService {
 	public String extractRole(String token) {
 		Object role = validateAndExtractClaims(token).get("role");
 		return role != null ? role.toString() : null;
+	}
+
+	public String extractCompanyName(String token) {
+		Object company = validateAndExtractClaims(token).get("companyName");
+		return company != null ? company.toString() : null;
 	}
 
 	public boolean isTokenValid(String token) {

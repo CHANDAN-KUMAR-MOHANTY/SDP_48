@@ -35,7 +35,8 @@ public class SecurityConfig {
 			.exceptionHandling(eh -> eh.authenticationEntryPoint(EP))
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers("/api/auth/**").permitAll()
-				.requestMatchers("/api/contractors/**").authenticated()
+				.requestMatchers("/api/contractors/admin/**").hasRole("ADMIN")
+				.requestMatchers("/api/contractors/**").hasAnyRole("CONTRACTOR", "ADMIN")
 				.anyRequest().permitAll()
 			)
 			.addFilterBefore(JAF, UsernamePasswordAuthenticationFilter.class);
